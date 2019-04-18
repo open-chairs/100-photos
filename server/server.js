@@ -22,15 +22,19 @@ app.get('/photos/:restaurantId', function (req, res) {
 
   var id = Number(req.params.restaurantId); 
 
-  console.log('server-side id', typeof id, id)
   getPhotosById(id, (error, data) => {
     if(error) {
       console.log(error);
       return;
     }
+    console.log(data);
     res.set('font-src','none')
     res.status(200).send(data);
   });
+})
+
+app.get('*', (req, res)=> {
+  res.sendFile(path.join(__dirname,'../client/dist/index.html'))
 })
 
 app.listen(PORT, () => {

@@ -12,7 +12,7 @@ var randomImage = function () {
 
 var insertPhotoRow = function () {
   let imageName = randomImage();
-  let url = `https://s3-us-west-1.amazonaws.com/placeholders.carousel.photos/00${imageName}.jpg`;
+  let url = `./images/00${imageName}.jpg`;
 
   let restaurant_id = Math.floor(Math.random() * 100) + 1;
   // let restaurant_id = 1;
@@ -26,20 +26,26 @@ var insertPhotoRow = function () {
   return query;
 }
 
-var populatePhotosTable = function () {
-  for (var i = 0; i < 1000; i++) {
+var populatePhotosTable = function (n, cb) {
+  const NUM_OF_RECORDS = n
+  let soFar = 0
+  for (var i = 0; i < NUM_OF_RECORDS; i++) {
     var query = insertPhotoRow();
 
     db.query(query, (err) => {
+      soFar++
       if (err) {
         console.log(err);
       }
-      return;
+      if(NUM_OF_RECORDS === soFar){
+        // console.log('done')
+        cb()
+      }
     })
   }
 }
 
-populatePhotosTable();
+populatePhotosTable(1000, () => db.destroy());
 
 module.exports.db = db;
 

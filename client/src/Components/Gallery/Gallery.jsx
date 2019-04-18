@@ -41,6 +41,7 @@ class Gallery extends React.Component {
                   />
                 )
               }
+              return <div></div>
             })}
             <div
               id="photo8"
@@ -63,13 +64,16 @@ class Gallery extends React.Component {
 
         </div>
       )
-    } else if (this.props.data.length < 9 && this.props.data.length !== 0) {
+    } else if (this.props.data.length <= 9 && this.props.data.length !== 0) {
       return (
         <Styled.Gallery>
           <Styled.SinglePhoto src={this.props.data[0].url}></Styled.SinglePhoto>
         </Styled.Gallery>
       )
     } else if (this.props.data.length === 0) {
+      return <div></div>
+    }
+    else {
       return <div></div>
     }
   }
