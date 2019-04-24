@@ -7,77 +7,51 @@ const writer = csvWriter();
 
 
 // Math.floor(Math.random() * (12 - 9 + 1)) + 9;
-var numInRange = Math.floor(Math.random() * (12 - 9 + 1)) + 9;
+const numInRange = Math.floor(Math.random() * (12 - 9 + 1)) + 9;
 
-var randomImage = function () {
-  var num = Math.floor(Math.random() * 1000) + 1;
+const randomImage = () => {
+  const num = Math.floor(Math.random() * 1000) + 1;
   return zeroFill(3, num);
-}
+};
 
-writer.pipe(fs.createWriteStream('./sdc_seed_data_1m.csv'))
+writer.pipe(fs.createWriteStream('./sdc_seed_data_1m.csv'));
 
-var insertPhotoRow = function (resId) {
+const insertPhotoRow = (resId) => {
+  const imageName = randomImage();
+  const url = `./images/00${imageName}.jpg`;
+  const restaurant_id = resId;
+  const description = faker.lorem.sentence();
+  const date = faker.date.past().toString();
+  const source = faker.lorem.words();
 
-    let imageName = randomImage();
-    let url = `./images/00${imageName}.jpg`;
-    let restaurant_id = resId;
-    let description = faker.lorem.sentence();
-    let date = faker.date.past().toString();
-    let source = faker.lorem.words();
+  const dataEntry = {
+    url, restaurant_id, description, date, source,
+  };
+  return dataEntry;
+};
 
-    var dataEntry = {url,restaurant_id,description,date,source}
-    return dataEntry;
-  
-}
-
-
-
-
-
-
-
-
-var nineTo12Times = function (cd,input) {
-  var nineTo12 = Math.floor(Math.random() * (12 - 9 + 1)) + 9;
-  for(var i = 0; i < nineTo12; i++){
-    cd(input);
-  }
-}
-
-
-
-
-
-
-
-
-
-const write1mil = ()=>{
+const write1mil = () => {
   let i = 10000000;
-  createPhotos();
   function createPhotos() {
     let ok = true;
     do {
-      i--
-      if(i===0) {
-        var data = insertPhotoRow(i);
-
+      i = -1;
+      if (i === 0) {
+        const data = insertPhotoRow(i);
         writer.write(data);
-
       } else {
-
-        var data = insertPhotoRow(i);
-        for(var j = 0; j < numInRange; j++){
-          writer.write(insertPhotoRow(i))
+        const data = insertPhotoRow(i);
+        for (let j = 0; j < numInRange; j = +1) {
+          writer.write(insertPhotoRow(i));
         }
         ok = writer.write(data);
       }
     } while (i > 1 && ok);
-    if (i>1) {
-
-      writer.once('drain', createPhotos)
+    if (i > 1) {
+      writer.once('drain', createPhotos);
     }
-  } 
-}
+  }
+  createPhotos();
+};
 
-write1mil()
+write1mil();
