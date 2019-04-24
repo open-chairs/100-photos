@@ -2,13 +2,13 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const parser = require('body-parser');
-const db = require('../database/index.js');
-const mysql = require('mysql');
 const cors = require('cors');
 const SqlString = require('sqlstring');
+const db = require('../database/index.js');
 
-var PORT = 3002;
-var app = express();
+
+const PORT = 3002;
+const app = express();
 
 db.connect();
 
@@ -18,9 +18,9 @@ app.use(cors());
 
 app.use(express.static('./client/dist'));
 
-app.get('/photos/:restaurantId', function (req, res) {
+app.get('/photos/:restaurantId', function (req, res){
 
-  var id = Number(req.params.restaurantId); 
+  const id = Number(req.params.restaurantId); 
 
   getPhotosById(id, (error, data) => {
     if(error) {
@@ -33,7 +33,7 @@ app.get('/photos/:restaurantId', function (req, res) {
   });
 })
 
-app.get('*', (req, res)=> {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname,'../client/dist/index.html'))
 })
 
@@ -52,5 +52,5 @@ const getPhotosById = (id, callback) => {
       return; 
     } 
     callback(null, photos)
-   });
-}
+});
+};
