@@ -3,14 +3,10 @@ const path = require('path');
 const morgan = require('morgan');
 const parser = require('body-parser');
 const db = require('../database/index.js');
-const mysql = require('mysql');
 const cors = require('cors');
-const SqlString = require('sqlstring');
 
 var PORT = 3002;
 var app = express();
-
-db.connect();
 
 app.use(morgan('dev'));
 app.use(parser.json());
@@ -25,11 +21,9 @@ app.get('/photos/:restaurantId', function (req, res) {
   getPhotosById(id, (error, data) => {
     if(error) {
       console.log(error);
-      return;
+      res.status(500).send(error);
     }
-    console.log(data);
-    res.set('font-src','none')
-    res.status(200).send(data);
+    res.status(200).send(JSON.parse(data[0].img));
   });
 })
 
@@ -45,12 +39,5 @@ app.listen(PORT, () => {
 //*********************** MODEL ****************************
 
 const getPhotosById = (id, callback) => {
-  var escapedId = SqlString.escape(id);
-  db.query(`SELECT * FROM photos WHERE restaurant_id = ${escapedId};`, (err, photos) => {
-    if(err){
-      callback(err);
-      return; 
-    } 
-    callback(null, photos)
-   });
+  db.getRestaurantPhoto(id,callback)
 }
