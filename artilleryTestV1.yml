@@ -1,0 +1,15 @@
+config:
+ target: "http://localhost:3002"
+ phases:
+   - duration: 30
+     arrivalRate: 100
+ variables:
+    resId:
+      - ["500", "357320", "3","673998"]
+      - ["6000000", "900000", "10000000"]
+scenarios:
+ - flow:
+    - loop:
+      - get:
+         url: "/{{$loopElement}}"
+      over: resId 

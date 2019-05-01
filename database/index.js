@@ -29,3 +29,4 @@ const getRestaurantPhoto = (resId,cb) => {
 module.exports.getRestaurantPhoto = getRestaurantPhoto;
 
 // getRestaurantPhoto(5,(err,input)=>(console.log(err,input)))
+
