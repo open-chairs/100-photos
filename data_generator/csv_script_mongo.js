@@ -19,7 +19,7 @@ writer.pipe(fs.createWriteStream('./sdc_seed_data_mongo_denormalized.json'));
 //creaet image array
 const oneImg = () => {
   const imageName = randomImage();
-  const url = `./images/00${imageName}.jpg`;
+  const url = `https://s3-us-west-1.amazonaws.com/sdctestphotos/00${imageName}.jpg`;
   const description = faker.lorem.sentence();
   const date = faker.date.past().toString();
   const source = faker.lorem.words();
@@ -48,9 +48,9 @@ const imgArr = () => {
 
 const rowEntry = (num) =>{
   const img = imgArr();
-  const restautant_id = num
+  const restaurant_id = num
 
-  const data = {restautant_id,img:JSON.stringify(img),}
+  const data = {restaurant_id,img:JSON.stringify(img),}
   return data;
 };
 
@@ -60,7 +60,7 @@ const rowEntry = (num) =>{
 
 const insertRestaurantRow = (resId) => {
   const imageName = randomImage();
-  const url = `./images/00${imageName}.jpg`;
+  const url = `https://s3-us-west-1.amazonaws.com/sdctestphotos/${imageName}.jpg`;
   const restaurant_id = resId;
   const description = faker.lorem.sentence();
   const date = faker.date.past().toString();

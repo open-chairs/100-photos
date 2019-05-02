@@ -6,7 +6,7 @@ var _db
 module.exports = {
     connectToServer: function( cb ) {
         MongoClient.connect(url,{useNewUrlParser:true},function(err,client) {
-            _db = client.db('sdc100photostest');
+            _db = client.db('sdc100photos');
             return cb(err);
         })
     },

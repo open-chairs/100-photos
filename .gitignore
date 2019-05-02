@@ -31,3 +31,5 @@ client/dist/*
 client/src/sampleData.js
 
 data_generator/sdc_seed_data_1m.csv
+
+data_generator/sdc_seed_data_mongo_denormalized.json

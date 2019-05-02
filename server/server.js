@@ -45,5 +45,5 @@ mongo.connectToServer( function(err, client) {
 //*********************** MODEL ****************************
 
 const getPhotosById = (id, callback) => {
-  db.collection('photostest').find({restautant_id:id}).toArray(callback)
+  db.collection('photos').find({restaurant_id:id}).toArray(callback)
 }

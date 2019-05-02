@@ -7,7 +7,7 @@
 // });
 
 const mongoos = require('mongoose');
-mongoos.connect('mongodb://localhost:27017/sdc100photostest',{ useNewUrlParser: true });
+mongoos.connect('mongodb://localhost:27017/sdc100photos',{ useNewUrlParser: true });
 const db = mongoos.connection
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -15,15 +15,15 @@ db.once('open', function() {
 });
 
 const photoShema = new mongoos.Schema({
-  restautant_id: Number,
+  restaurant_id: Number,
   img: Array,
 });
 
-const PhotosCollections = mongoos.model('PhotosCollections', photoShema,'photostest');
-// PhotosCollections.find({restautant_id:489478}).exec(cb)
+const PhotosCollections = mongoos.model('PhotosCollections', photoShema,'photos');
+// PhotosCollections.find({restaurant_id:489478}).exec(cb)
 
 const getRestaurantPhoto = (resId,cb) => {
-  PhotosCollections.find({restautant_id:resId}).exec(cb)
+  PhotosCollections.find({restaurant_id:resId}).exec(cb)
 }
 
 module.exports.getRestaurantPhoto = getRestaurantPhoto;
